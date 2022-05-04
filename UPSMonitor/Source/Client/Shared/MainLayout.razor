@@ -1,0 +1,81 @@
+﻿@inherits LayoutComponentBase
+@inject IBreakpointService BreakpointListener
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorageService
+@implements IAsyncDisposable
+@using MudBlazor.Services
+
+<MudThemeProvider DefaultScrollbar="true" @bind-IsDarkMode="@_isDarkMode" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="0">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudText Typo="Typo.h6">UPSMonitor</MudText>
+        <MudSpacer />
+        <MudToggleIconButton Icon="@Icons.Material.Filled.LightMode" ToggledIcon="@Icons.Material.Filled.DarkMode" Color="Color.Inherit" Toggled="@_isDarkMode" ToggledChanged="@((e) => ThemeToggle())" />
+        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/" Target="_blank" />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="1" Variant="@_drawerVariant" OpenMiniOnHover="true">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private bool _drawerOpen;
+    private bool _isDarkMode;
+    private DrawerVariant _drawerVariant = DrawerVariant.Mini;
+    private Guid _subscriptionId;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    void ThemeToggle()
+    {
+        _isDarkMode = !_isDarkMode;
+        LocalStorageService.SetItemAsync(nameof(_isDarkMode), _isDarkMode);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _isDarkMode = await LocalStorageService.GetItemAsync<bool>(nameof(_isDarkMode));
+        await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var subscriptionResult = await BreakpointListener.Subscribe(async (breakpoint) =>
+            {
+                var newDrawerVariant = breakpoint < Breakpoint.Md ? DrawerVariant.Temporary : DrawerVariant.Mini;
+                if (_drawerVariant != newDrawerVariant)
+                {
+                    _drawerVariant = newDrawerVariant;
+                    if ((newDrawerVariant == DrawerVariant.Temporary && _drawerOpen == false)
+                        || newDrawerVariant == DrawerVariant.Mini)
+                    {
+                        DrawerToggle();
+                        await InvokeAsync(StateHasChanged);
+                        DrawerToggle();
+                    }
+                }
+                await InvokeAsync(StateHasChanged);
+            }, new ResizeOptions { SuppressInitEvent = false, NotifyOnBreakpointOnly = true });
+
+            _subscriptionId = subscriptionResult.SubscriptionId;
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public async ValueTask DisposeAsync() => await BreakpointListener.Unsubscribe(_subscriptionId);
+}

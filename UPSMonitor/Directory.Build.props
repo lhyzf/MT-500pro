@@ -1,0 +1,11 @@
+<Project>
+
+  <PropertyGroup>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)Artifact\bin\$(MSBuildProjectName)\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)Artifact\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)Artifact\Packages\$(Configuration)</PackageOutputPath>
+    <AppxPackageDir>$(MSBuildThisFileDirectory)Artifacts\AppPackages\</AppxPackageDir>
+  </PropertyGroup>
+
+</Project>
