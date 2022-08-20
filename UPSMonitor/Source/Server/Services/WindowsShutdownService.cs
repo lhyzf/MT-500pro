@@ -6,7 +6,7 @@ namespace UPSMonitor.Server.Services
     {
         private const string ShutdownExecute = "shutdown.exe";
         private readonly ILogger<WindowsShutdownService> _logger;
-        private System.Timers.Timer _hibernateTimer = new();
+        private readonly System.Timers.Timer _hibernateTimer = new();
 
         public WindowsShutdownService(ILogger<WindowsShutdownService> logger)
         {

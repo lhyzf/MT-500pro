@@ -21,16 +21,27 @@ namespace UPSMonitor.Server.Services
             _logger = logger;
             _shutdownService = shutdownService;
             _readThread = new Thread(Read);
+        }
 
+        public async void Start()
+        {
             var portNames = GetPortNames();
             if (portNames.Length > 0)
             {
-                OpenPort(SerialPort.GetPortNames().First());
+                var portName = portNames.First();
+                while (!_serialPort.IsOpen)
+                {
+                    try
+                    {
+                        OpenPort(portName);
+                    }
+                    catch (TimeoutException ex)
+                    {
+                        _logger.LogError("UPSService OpenPort({portName}) timeout({ex.Message}).", portName, ex.Message);
+                        await Task.Delay(ReadSerialPortInterval);
+                    }
+                }
             }
-        }
-
-        public void Start()
-        {
 #if DEBUG
             Info = new UPSInfo("#220.0 004 12.00 50.0");
 #else
@@ -38,7 +49,7 @@ namespace UPSMonitor.Server.Services
             Info = new UPSInfo(_serialPort.ReadLine());
 #endif
             _logger.LogInformation("UPSService Service running.");
-            _logger.LogInformation(Info.ToString());
+            _logger.LogInformation("{Info}", Info);
             _continue = true;
             _readThread.Start();
         }
@@ -63,12 +74,12 @@ namespace UPSMonitor.Server.Services
                     string message = _serialPort.ReadLine();
                     Status = new UPSStatus(message);
 #endif
-                    _logger.LogInformation(Status.ToString());
+                    _logger.LogInformation("{Status}", Status);
                     if (Status.IsInVoltageAbnormal)
                     {
                         if (!_isShutdownPlanned)
                         {
-                            _shutdownService.Shutdown(ShutdownDelay);
+                            _shutdownService.Hibernate(ShutdownDelay);
                             _isShutdownPlanned = true;
                         }
                     }
@@ -79,7 +90,10 @@ namespace UPSMonitor.Server.Services
                     }
                     await Task.Delay(ReadSerialPortInterval);
                 }
-                catch (TimeoutException) { }
+                catch (TimeoutException ex)
+                {
+                    _logger.LogError("UPSService Read() timeout({ex.Message}).", ex.Message);
+                }
             }
         }
 
@@ -89,7 +103,7 @@ namespace UPSMonitor.Server.Services
             {
                 _serialPort.Close();
             }
-            _logger.LogInformation($"UPSService OpenPort({portName}).");
+            _logger.LogInformation("UPSService OpenPort({portName}).", portName);
             // Allow the user to set the appropriate properties.
             _serialPort.PortName = portName;
             _serialPort.BaudRate = 2400;
