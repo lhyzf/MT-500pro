@@ -7,261 +7,268 @@
 
 <PageTitle>Home</PageTitle>
 
-<MudExpansionPanels MultiExpansion="true">
-    <MudExpansionPanel Text="Rated Specifications">
-        @if (upsInfo == null)
-        {
-            <MudProgressCircular Class="ma-4" Color="Color.Default" Indeterminate="true" />
-        }
-        else
-        {
-            <MudGrid Spacing="1" Justify="Justify.FlexStart">
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">Voltage</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsInfo.Voltage V</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">Current</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsInfo.Current.TrimStart('0') A</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">BatteryVoltage</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsInfo.BatteryVoltage V</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">Frequency</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsInfo.Frequency Hz</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-            </MudGrid>
-        }
-    </MudExpansionPanel>
-    <MudExpansionPanel Text="Status" IsInitiallyExpanded="true">
-        @if (upsStatus == null)
-        {
-            <MudProgressCircular Class="ma-4" Color="Color.Default" Indeterminate="true" />
-        }
-        else
-        {
-            <MudGrid Spacing="1" Justify="Justify.FlexStart">
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">InVoltage</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.InVoltage V</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">InFaultVoltage</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.InFaultVoltage V</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">OutVoltage</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.OutVoltage V</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">OutCurrent</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.OutCurrent.TrimStart('0') %</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">InFrequency</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.InFrequency Hz</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">BatteryVoltage</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.BatteryVoltage V</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">Temperature</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.Temperature ℃</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">IsInVoltageAbnormal</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.IsInVoltageAbnormal</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">IsBatteryVoltageLow</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.IsBatteryVoltageLow</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">IsBypassOrBuckActive</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.IsBypassOrBuckActive</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">IsUPSFault</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.IsUPSFault</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">IsPassiveStandbyUPS</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.IsPassiveStandbyUPS</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">IsTesting</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.IsTesting</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">IsPowerOff</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.IsPowerOff</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem>
-                    <MudCard>
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.h6">IsBuzzerOn</MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent>
-                            <MudText Align="Align.End">@upsStatus.IsBuzzerOn</MudText>
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-            </MudGrid>
-        }
-    </MudExpansionPanel>
-    <MudExpansionPanel Text="Output">
-        <MudTextField id="@logMessageTextareaId" T="string" Variant="Variant.Outlined" Adornment="Adornment.None" ReadOnly="true" Text="@messageString" Lines="10" />
-    </MudExpansionPanel>
-</MudExpansionPanels>
+@if (noData)
+{
+    <MudAlert Severity="Severity.Error">No data.</MudAlert>
+}
+else
+{
+    <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanel Text="Rated Specifications">
+            @if (upsInfo == null)
+            {
+                <MudProgressCircular Class="ma-4" Color="Color.Default" Indeterminate="true" />
+            }
+            else
+            {
+                <MudGrid Spacing="1" Justify="Justify.FlexStart">
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">Voltage</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsInfo.Voltage V</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">Current</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsInfo.Current.TrimStart('0') A</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">BatteryVoltage</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsInfo.BatteryVoltage V</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">Frequency</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsInfo.Frequency Hz</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                </MudGrid>
+            }
+        </MudExpansionPanel>
+        <MudExpansionPanel Text="Status" IsInitiallyExpanded="true">
+            @if (upsStatus == null)
+            {
+                <MudProgressCircular Class="ma-4" Color="Color.Default" Indeterminate="true" />
+            }
+            else
+            {
+                <MudGrid Spacing="1" Justify="Justify.FlexStart">
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">InVoltage</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.InVoltage V</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">InFaultVoltage</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.InFaultVoltage V</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">OutVoltage</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.OutVoltage V</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">OutCurrent</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.OutCurrent.TrimStart('0') %</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">InFrequency</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.InFrequency Hz</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">BatteryVoltage</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.BatteryVoltage V</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">Temperature</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.Temperature ℃</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">IsInVoltageAbnormal</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.IsInVoltageAbnormal</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">IsBatteryVoltageLow</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.IsBatteryVoltageLow</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">IsBypassOrBuckActive</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.IsBypassOrBuckActive</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">IsUPSFault</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.IsUPSFault</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">IsPassiveStandbyUPS</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.IsPassiveStandbyUPS</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">IsTesting</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.IsTesting</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">IsPowerOff</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.IsPowerOff</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem>
+                        <MudCard>
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">IsBuzzerOn</MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Align="Align.End">@upsStatus.IsBuzzerOn</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                </MudGrid>
+            }
+        </MudExpansionPanel>
+        <MudExpansionPanel Text="Output">
+            <MudTextField id="@logMessageTextareaId" T="string" Variant="Variant.Outlined" Adornment="Adornment.None" ReadOnly="true" Text="@messageString" Lines="10" />
+        </MudExpansionPanel>
+    </MudExpansionPanels>
+}
 
 
 @code {
@@ -270,12 +277,21 @@
     private readonly Queue<string> messages = new(MaxMessageCount);
     private UPSInfo? upsInfo;
     private UPSStatus? upsStatus;
+    private bool noData;
     private bool disposed;
     private string messageString => string.Join(Environment.NewLine, messages);
 
     protected override async Task OnInitializedAsync()
     {
-        upsInfo = await Http.GetFromJsonAsync<UPSInfo>("ups/info");
+        try
+        {
+            upsInfo = await Http.GetFromJsonAsync<UPSInfo>("ups/info");
+        }
+        catch (Exception)
+        {
+            noData = true;
+            return;
+        }
         if (upsInfo != null)
         {
             messages.Enqueue(upsInfo.ToString());
