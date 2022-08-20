@@ -1,4 +1,8 @@
-﻿using System.IO.Ports;
+﻿#if DEBUG
+#define FAKE_COM_DATA
+#endif
+
+using System.IO.Ports;
 using UPSMonitor.Shared;
 
 namespace UPSMonitor.Server.Services
@@ -25,6 +29,10 @@ namespace UPSMonitor.Server.Services
 
         public async void Start()
         {
+            _logger.LogInformation("UPSService Service running.");
+#if FAKE_COM_DATA
+            Info = new UPSInfo("#220.0 004 12.00 50.0");
+#else
             var portNames = GetPortNames();
             if (portNames.Length > 0)
             {
@@ -42,13 +50,14 @@ namespace UPSMonitor.Server.Services
                     }
                 }
             }
-#if DEBUG
-            Info = new UPSInfo("#220.0 004 12.00 50.0");
-#else
+            else
+            {
+                _logger.LogWarning("No availble port.");
+                return;
+            }
             _serialPort.WriteLine(UPSInfo.Command);
             Info = new UPSInfo(_serialPort.ReadLine());
 #endif
-            _logger.LogInformation("UPSService Service running.");
             _logger.LogInformation("{Info}", Info);
             _continue = true;
             _readThread.Start();
@@ -67,7 +76,7 @@ namespace UPSMonitor.Server.Services
             {
                 try
                 {
-#if DEBUG
+#if FAKE_COM_DATA
                     Status = new UPSStatus("(220.4 220.8 220.8 021 50.0 13.1 25.0 00001001");
 #else
                     _serialPort.WriteLine(UPSStatus.Command);
