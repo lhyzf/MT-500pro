@@ -37,26 +37,26 @@ namespace UPSMonitor.Server.Services
             if (portNames.Length > 0)
             {
                 var portName = portNames.First();
-                while (!_serialPort.IsOpen)
-                {
-                    try
-                    {
-                        OpenPort(portName);
-                    }
-                    catch (TimeoutException ex)
-                    {
-                        _logger.LogError("UPSService OpenPort({portName}) timeout({ex.Message}).", portName, ex.Message);
-                        await Task.Delay(ReadSerialPortInterval);
-                    }
-                }
+                OpenPort(portName);
             }
             else
             {
                 _logger.LogWarning("No availble port.");
                 return;
             }
-            _serialPort.WriteLine(UPSInfo.Command);
-            Info = new UPSInfo(_serialPort.ReadLine());
+            while (Info == null)
+            {
+                try
+                {
+                    _serialPort.WriteLine(UPSInfo.Command);
+                    Info = new UPSInfo(_serialPort.ReadLine());
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError("UPSService start reading serial port({_serialPort.PortName}) error({ex.Message}).", _serialPort.PortName, ex.Message);
+                    await Task.Delay(ReadSerialPortInterval);
+                }
+            }
 #endif
             _logger.LogInformation("{Info}", Info);
             _continue = true;
