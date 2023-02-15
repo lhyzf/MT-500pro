@@ -13,6 +13,7 @@ namespace UPSMonitor.Server.Services
             _logger = logger;
             _hibernateTimer.Elapsed += (sender, args) =>
             {
+                _logger.LogInformation("WindowsShutdownService Hibernating.");
                 Process.Start(ShutdownExecute, "/h");
             };
         }
@@ -25,7 +26,7 @@ namespace UPSMonitor.Server.Services
 
         public void Hibernate(TimeSpan delay)
         {
-            _logger.LogInformation("WindowsShutdownService Hibernate.");
+            _logger.LogInformation("WindowsShutdownService Hibernate scheduled.");
             _hibernateTimer.Interval = delay.TotalMilliseconds;
             _hibernateTimer.Start();
         }

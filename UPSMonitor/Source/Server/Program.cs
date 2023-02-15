@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.ResponseCompression;
-using UPSMonitor.Server.Services;
+﻿using UPSMonitor.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

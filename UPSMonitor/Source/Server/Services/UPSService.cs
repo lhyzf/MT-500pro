@@ -18,7 +18,7 @@ namespace UPSMonitor.Server.Services
         private bool _continue;
         private bool _isShutdownPlanned;
         public TimeSpan ReadSerialPortInterval { get; set; } = TimeSpan.FromSeconds(1);
-        public TimeSpan ShutdownDelay { get; set; } = TimeSpan.FromMinutes(1);
+        public TimeSpan ShutdownDelay { get; set; } = TimeSpan.FromMinutes(2);
 
         public UPSService(ILogger<UPSService> logger, IShutdownService shutdownService)
         {
