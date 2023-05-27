@@ -81,7 +81,7 @@
     {
         if (firstRender)
         {
-            var subscriptionResult = await BreakpointListener.Subscribe(async (breakpoint) =>
+            var subscriptionResult = await BreakpointListener.SubscribeAsync(async (breakpoint) =>
             {
                 var newDrawerVariant = breakpoint < Breakpoint.Md ? DrawerVariant.Temporary : DrawerVariant.Mini;
                 if (_drawerVariant != newDrawerVariant)
@@ -104,5 +104,5 @@
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    public async ValueTask DisposeAsync() => await BreakpointListener.Unsubscribe(_subscriptionId);
+    public async ValueTask DisposeAsync() => await BreakpointListener.UnsubscribeAsync(_subscriptionId);
 }
